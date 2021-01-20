@@ -7,11 +7,21 @@ module Api
       before_action :get_todo, only: %i[update]
 
       def create
-        @project.create(todo_params)
+        @todo = @project.new(todo_params)
+
+        if @todo.save
+          render json: @todo, status: :created
+        else
+          render json: { errors: @todo.errors }, status: :unprocessable_entity
+        end
       end
 
       def update
-        @todo.update(todo_params)
+        if @todo.update(todo_params)
+          head :no_content, status: :accepted
+        else
+          render json: { errors: @todo.errors }, status: :unprocessable_entity
+        end
       end
 
       private
