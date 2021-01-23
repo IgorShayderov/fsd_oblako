@@ -2,7 +2,7 @@
 
 module Api
   module V1
-    class ProjectsController < ApplicationController
+    class ProjectsController < BaseController
       def index
         begin
           all_projects_with_todos = Project.all_projects_with_todos
