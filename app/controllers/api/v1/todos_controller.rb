@@ -10,10 +10,10 @@ module Api
         @todo = @project.todos.new(todo_params)
 
         if @todo.save
-          render json: @todo.as_json({
-            only: %i[id text is_completed],
-            include: { project: { only: %i[id title]}}
-          }), status: :created
+          render json: {
+            todo: @todo.as_json({ only: %i[id text is_completed] }),
+            project: @project.as_json({ only: %i[id title] })
+          }, status: :created
         else
           render json: { errors: @todo.errors }, status: :unprocessable_entity
         end
