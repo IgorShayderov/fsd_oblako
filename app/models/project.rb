@@ -6,7 +6,6 @@ class Project < ApplicationRecord
   has_many :todos
 
   scope :all_projects_with_todos, lambda {
-    includes(:todos)
-      .map { |project| project.as_json({ only: %i[id title], include: { todos: { only: %i[id text is_completed] } } }) }
+    includes(:todos).as_json({ only: %i[id title], include: { todos: { only: %i[id text is_completed] } } })
   }
 end
